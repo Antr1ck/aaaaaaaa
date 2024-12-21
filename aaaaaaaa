@@ -1,0 +1,76 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T> class LinkedList {
+private:
+    struct Node 
+    {
+        T data;
+        Node* prev;
+        Node* next;
+
+        Node(const T& data) : data{ data }, prev{ nullptr }, next{ nullptr } {}
+    };
+
+    Node* head;
+    Node* tail;
+
+public:
+    LinkedList() : head{ nullptr }, tail{ nullptr } {}
+
+    ~LinkedList() 
+    {
+        clear();
+    }
+
+    void append(const T& value) 
+    {
+        Node* newnode = new Node[value];
+
+        if (!head) 
+        {
+            head = tail = newnode;
+        }
+        else 
+        {
+            tail->next = newnode;
+            newnode->prev = tail;
+            tail = newnode;
+        }
+    }
+
+    void remove() 
+    {
+        Node* temp = tail;
+        if (tail->prev) 
+        {
+            tail = tail->prev;
+            tail->next = nullptr;
+        }
+        else 
+        {
+            head = tail = nullptr;
+        }
+        delete temp;
+    }
+
+    void function() const 
+    {
+        Node* current = head;
+        while (current)
+        {
+            cout << current->data;
+            current = current->next;
+        }
+        cout << "\n";
+    }
+
+    void clear() 
+    {
+        while (head) 
+        {
+            remove();
+        }
+    }
+}
